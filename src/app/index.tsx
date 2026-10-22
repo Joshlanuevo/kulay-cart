@@ -1,9 +1,14 @@
-import { Text, View } from 'react-native';
+import { ProductCard } from '@/components/product-card';
+import { PRODUCTS } from '@/data/products';
+import { FlatList } from 'react-native';
 
 export default function MenuScreen() {
   return (
-    <View className='flex-1 items-center justify-center bg-pink-50'>
-      <Text className='text-2xl font-bold text-pink-600'>Menu</Text>
-    </View>
+    <FlatList 
+      data={PRODUCTS}
+      keyExtractor={item => item.id}
+      renderItem={({ item }) => <ProductCard product={item} />}
+      contentContainerClassName='p-4 gap-3'
+    />
   )
 }
