@@ -28,13 +28,14 @@ A simple React Native "Add to Cart" app built for the Kulay mini task.
 ## Project structure
 ```
 src/
-  app/          Screens (Expo Router): menu (index) and cart
-  components/   ProductCard, CartItemRow, CartBadge, VoucherInput
-  context/      Cart reducer and CartProvider
-  hooks/        useCart custom hook
-  data/         Static products
-  types/        Product and CartItem types
-  utils/        Voucher logic
+   app/          Screens (Expo Router): menu (index) and cart
+   components/   ProductCard, CartItemRow, CartBadge, VoucherInput
+   context/      Cart reducer and CartProvider
+   hooks/        useCart custom hook
+   data/         Static products
+   types/        Product and CartItem types
+   constants/    UI strings
+   utils/        Price formatting and voucher logic
 ```
 
 ## Run locally
@@ -44,7 +45,12 @@ npx expo start
 ```
 
 ## Android APK
-Download: [link to the GitHub Release]
+Download from the [v1.0.0 release](https://github.com/Joshlanuevo/kulay-cart/releases/tag/v1.0.0).
 
 ## Screenshots
-(add 2–3 screenshots: menu, cart, voucher applied)
+<p>
+   <img src="screenshots/menu.jpg" width="250" alt="Menu" />
+   <img src="screenshots/cart.jpg" width="250" alt="Cart" />
+   <img src="screenshots/voucher.jpg" width="250" alt="Voucher applied" />
+</p>
+
