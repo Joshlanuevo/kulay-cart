@@ -1,5 +1,6 @@
 import { getVoucherRate } from '@/utils/voucher';
-import { createContext, useMemo, useReducer, useState, type ReactNode } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createContext, useEffect, useMemo, useReducer, useState, type ReactNode } from 'react';
 
 import type { CartItem } from '@/types/cart';
 import type { Product } from '@/types/product';
@@ -23,8 +24,33 @@ export interface CartContextValue {
 
 export const CartContext = createContext<CartContextValue | null>(null);
 
+const STORAGE_KEY = 'kulay-cart';
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, initialCartState);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [voucherCode, setVoucherCode] = useState<string | null>(null);
+
+  // load the saved cart once, when the app starts
+  useEffect(() => {
+    AsyncStorage.getItem(STORAGE_KEY)
+      .then(saved => {
+        if (!saved) return;
+        const data = JSON.parse(saved);
+        dispatch({ type: 'HYDRATE', items: data.items ?? [] });
+        setVoucherCode(data.voucherCode ?? null);
+      })
+      .catch(() => {
+        // corrupted or unreadable data: just start with an empty cart
+      })
+      .finally(() => setIsLoaded(true));
+  }, []);
+
+  // save whenever the cart or the voucher changes
+  useEffect(() => {
+    if (!isLoaded) return;
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ items: state.items, voucherCode }));
+  }, [state.items, voucherCode, isLoaded]);
 
   // useMemo: recalculated only when the cart items change
   const itemCount = useMemo(
@@ -35,8 +61,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     () => state.items.reduce((sum, item) => sum + item.product.price * item.quantity, 0),
     [state.items],
   );
-
-  const [voucherCode, setVoucherCode] = useState<string | null>(null);
 
   // useMemo: recalculated only when the subtotal or the voucher changes
   const discount = useMemo(() => {

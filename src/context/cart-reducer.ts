@@ -10,7 +10,8 @@ export type CartAction =
   | { type: 'INCREASE'; productId: string }
   | { type: 'DECREASE'; productId: string }
   | { type: 'REMOVE'; productId: string }
-  | { type: 'CLEAR' };
+  | { type: 'CLEAR' }
+  | { type: 'HYDRATE'; items: CartItem[] };
 
 export const initialCartState: CartState = { items: [] };
 
@@ -47,5 +48,7 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
       return { items: state.items.filter(item => item.product.id !== action.productId) };
     case 'CLEAR':
       return initialCartState;
+    case 'HYDRATE':
+      return { items: action.items };
   }
 }
