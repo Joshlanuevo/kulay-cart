@@ -1,10 +1,11 @@
 import { CartItemRow } from "@/components/cart-item-row";
 import { FlatList, Text, View } from "react-native";
 
+import { VoucherInput } from "@/components/voucher-input";
 import { useCart } from "@/hooks/use-cart";
 
 export default function CartScreen() {
-    const { items, itemCount, subtotal } = useCart();
+    const { items, itemCount, subtotal, discount, total } = useCart();
 
     if (items.length === 0) {
         return (
@@ -24,11 +25,29 @@ export default function CartScreen() {
             />
 
             {/* Summary at the bottom */}
-            <View className="bg-white p-4 gap-1 border-t border-pink-100">
-                <Text className="text-gray-600">Items: {itemCount}</Text>
-                <Text className="text-xl font-bold text-gray-900">
-                    Total: ₱{subtotal.toFixed(2)}
-                </Text>
+            <View className="bg-white p-4 gap-2 border-t border-pink-100">
+                <VoucherInput />
+
+                <View className="flex-row justify-between">
+                    <Text className="text-gray-600">Items</Text>
+                    <Text className="text-gray-900">{itemCount}</Text>
+                </View>
+                <View className="flex-row justify-between">
+                    <Text className="text-gray-600">Subtotal</Text>
+                    <Text className="text-gray-900">₱{subtotal.toFixed(2)}</Text>
+                </View>
+
+                {discount > 0 && (
+                    <View className="flex-row justify-between">
+                        <Text className="text-green-700">Discount (10%)</Text>
+                        <Text className="text-green-700">−₱{discount.toFixed(2)}</Text>
+                    </View>
+                )}
+
+                <View className="flex-row justify-between">
+                    <Text className="text-xl font-bold text-gray-900">Total</Text>
+                    <Text className="text-xl font-bold text-pink-600">₱{total.toFixed(2)}</Text>
+                </View>
             </View>
         </View>
     )
