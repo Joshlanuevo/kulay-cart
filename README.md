@@ -1,56 +1,50 @@
-# Welcome to your Expo app 👋
+# Kulay Cart
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple React Native "Add to Cart" app built for the Kulay mini task.
 
-## Get started
+## Features
+- Menu of 5 static products (name, description, price)
+- Add to cart, change quantity, and remove items
+- Real-time item count (header badge) and total
+- Voucher: `discount10` gives 10% off (case-insensitive)
+- Cart and voucher are saved on the device, so they survive an app restart
 
-1. Install dependencies
+## Tech stack
+- React Native + Expo (SDK 58), TypeScript
+- Expo Router (Menu and Cart screens)
+- NativeWind (Tailwind CSS for React Native)
+- AsyncStorage (local persistence)
 
-   ```bash
-   npm install
-   ```
+## How hooks are used
+| Hook | Where | Why |
+|---|---|---|
+| `useReducer` | `context/cart-context.tsx` | All cart changes (add, increase, decrease, remove) go through one reducer |
+| `useContext` | `hooks/use-cart.ts` | Shares the cart with every screen without passing props |
+| Custom hook `useCart()` | `hooks/use-cart.ts` | One simple way for components to read and update the cart |
+| `useMemo` | `context/cart-context.tsx` | Item count, subtotal and discount recalculate only when the cart or voucher changes |
+| `useEffect` | `context/cart-context.tsx` | Loads the saved cart on start, and saves it whenever it changes |
+| `useState` | `components/voucher-input.tsx`, `context/cart-context.tsx` | Voucher input text, error message, applied voucher |
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+## Project structure
+```
+src/
+  app/          Screens (Expo Router): menu (index) and cart
+  components/   ProductCard, CartItemRow, CartBadge, VoucherInput
+  context/      Cart reducer and CartProvider
+  hooks/        useCart custom hook
+  data/         Static products
+  types/        Product and CartItem types
+  utils/        Voucher logic
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+## Run locally
+```bash
+npm install
+npx expo start
+```
 
-### Other setup steps
+## Android APK
+Download: [link to the GitHub Release]
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Screenshots
+(add 2–3 screenshots: menu, cart, voucher applied)
