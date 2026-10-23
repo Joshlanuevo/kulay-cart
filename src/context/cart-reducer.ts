@@ -2,15 +2,15 @@ import { CartItem } from "@/types/cart";
 import { Product } from "@/types/product";
 
 export interface CartState {
-    items: CartItem[];
+  items: CartItem[];
 }
 
 export type CartAction =
-    | { type: 'ADD'; product: Product }
-    | { type: 'INCREASE'; productId: string }
-    | { type: 'DECREASE'; productId: string }
-    | { type: 'REMOVE'; productId: string }
-    | { type: 'CLEAR' };
+  | { type: 'ADD'; product: Product }
+  | { type: 'INCREASE'; productId: string }
+  | { type: 'DECREASE'; productId: string }
+  | { type: 'REMOVE'; productId: string }
+  | { type: 'CLEAR' };
 
 export const initialCartState: CartState = { items: [] };
 

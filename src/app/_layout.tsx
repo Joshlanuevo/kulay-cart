@@ -15,6 +15,10 @@ export default function RootLayout() {
             headerRight: () => <CartBadge />,
           }}
         />
+        <Stack.Screen
+          name="cart"
+          options={{ title: 'Your Cart' }}
+        />
       </Stack>
     </CartProvider>
   );

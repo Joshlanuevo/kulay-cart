@@ -4,7 +4,7 @@ import { Pressable, Text, View } from "react-native";
 
 export function ProductCard({ product }: { product: Product }) {
     const { addToCart } = useCart();
-    
+
     return (
         <View className='bg-white rounded-2xl p-4 gap-1 border border-pink-100'>
             <Text className='text-lg font-bold text-gray-900'>{product.productName}</Text>
