@@ -1,52 +1,59 @@
 import { useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 
+import { STRINGS } from '@/constants/strings';
 import { useCart } from '@/hooks/use-cart';
+import { getVoucherPercent } from '@/utils/voucher';
 
 export function VoucherInput() {
-    const { voucherCode, applyVoucher, removeVoucher } = useCart();
-    const [code, setCode] = useState('');                     // what the user is typing
-    const [error, setError] = useState<string | null>(null);  // "Invalid voucher code"
+  const { voucherCode, applyVoucher, removeVoucher } = useCart();
+  const [code, setCode] = useState(''); // what the user is typing
+  const [error, setError] = useState<string | null>(null); // "Invalid voucher code"
 
-    const handleApply = () => {
-        if (applyVoucher(code)) {
-            setCode('');
-        } else {
-            setError('Invalid voucher code');
-        }
-    };
-
-    // Case 1: a voucher is already applied
-    if (voucherCode) {
-        return (
-            <View className="flex-row items-center justify-between bg-green-50 rounded-xl p-3">
-                <Text className="text-green-700 font-semibold">{voucherCode} applied · 10% off</Text>
-                <Pressable onPress={removeVoucher}>
-                    <Text className="text-red-500 font-semibold">Remove</Text>
-                </Pressable>
-            </View>
-        );
+  const handleApply = () => {
+    if (applyVoucher(code)) {
+      setCode('');
+    } else {
+      setError(STRINGS.invalidVoucher);
     }
+  };
 
-    // Case 2: no voucher yet, showing the input
+  // Case 1: a voucher is already applied
+  if (voucherCode) {
     return (
-        <View className="gap-1">
-            <View className="flex-row items-center gap-2">
-                <TextInput
-                    value={code}
-                    onChangeText={text => {
-                        setCode(text);
-                        setError(null); // clear the error while typing
-                    }}
-                    placeholder="Enter voucher code"
-                    autoCapitalize="characters"
-                    className="flex-1 bg-white border border-pink-200 rounded-xl px-3 py-2"
-                />
-                <Pressable onPress={handleApply} className="bg-pink-600 rounded-xl px-4 py-2">
-                    <Text className="text-white font-semibold">Apply</Text>
-                </Pressable>
-            </View>
-            {error && <Text className="text-red-500 text-sm">{error}</Text>}
-        </View>
+      <View className="flex-row items-center justify-between rounded-xl bg-green-50 p-3">
+        <Text className="font-semibold text-green-700">
+          {voucherCode} {STRINGS.applied} · {getVoucherPercent(voucherCode)}% {STRINGS.off}
+        </Text>
+        <Pressable onPress={removeVoucher} accessibilityLabel={`${STRINGS.remove} ${voucherCode}`}>
+          <Text className="font-semibold text-red-500">{STRINGS.remove}</Text>
+        </Pressable>
+      </View>
     );
+  }
+
+  // Case 2: no voucher yet, showing the input
+  return (
+    <View className="gap-1">
+      <View className="flex-row items-center gap-2">
+        <TextInput
+          value={code}
+          onChangeText={(text) => {
+            setCode(text);
+            setError(null); // clear the error while typing
+          }}
+          onSubmitEditing={handleApply}
+          placeholder={STRINGS.voucherPlaceholder}
+          autoCapitalize="characters"
+          autoCorrect={false}
+          returnKeyType="done"
+          className="flex-1 rounded-xl border border-pink-200 bg-white px-3 py-2"
+        />
+        <Pressable onPress={handleApply} className="rounded-xl bg-brand px-4 py-2">
+          <Text className="font-semibold text-white">{STRINGS.apply}</Text>
+        </Pressable>
+      </View>
+      {error && <Text className="text-sm text-red-500">{error}</Text>}
+    </View>
+  );
 }

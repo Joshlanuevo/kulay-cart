@@ -2,6 +2,7 @@ import { Stack } from 'expo-router';
 import '../../global.css';
 
 import { CartBadge } from '@/components/cart-badge';
+import { STRINGS } from '@/constants/strings';
 import { CartProvider } from '@/context/cart-context';
 
 export default function RootLayout() {
@@ -11,14 +12,11 @@ export default function RootLayout() {
         <Stack.Screen
           name="index"
           options={{
-            title: 'Kulay Menu',
+            title: STRINGS.menuTitle,
             headerRight: () => <CartBadge />,
           }}
         />
-        <Stack.Screen
-          name="cart"
-          options={{ title: 'Your Cart' }}
-        />
+        <Stack.Screen name="cart" options={{ title: STRINGS.cartTitle }} />
       </Stack>
     </CartProvider>
   );

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "kulay-cart",
+    "name": "Kulay Cart",
     "slug": "kulay-cart",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,7 +18,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.kulaycart"
+      "package": "com.joshlanuevo.kulaycart"
     },
     "web": {
       "output": "server",

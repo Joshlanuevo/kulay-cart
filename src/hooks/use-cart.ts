@@ -1,6 +1,8 @@
-import { CartContext } from '@/context/cart-context';
 import { useContext } from 'react';
 
+import { CartContext } from '@/context/cart-context';
+
+// Custom hook: any component can read and update the cart with useCart()
 export function useCart() {
   const cart = useContext(CartContext);
   if (!cart) {

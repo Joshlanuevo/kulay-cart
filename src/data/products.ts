@@ -28,7 +28,8 @@ export const PRODUCTS: Product[] = [
   {
     id: 'p5',
     productName: 'Halo-Halo',
-    description: 'A refreshing Filipino dessert with shaved ice, sweet beans, fruits, milk, and leche flan.',
+    description:
+      'A refreshing Filipino dessert with shaved ice, sweet beans, fruits, milk, and leche flan.',
     price: 200,
   },
 ];

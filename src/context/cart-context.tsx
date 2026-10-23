@@ -1,9 +1,11 @@
-import { getVoucherRate } from '@/utils/voucher';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, useEffect, useMemo, useReducer, useState, type ReactNode } from 'react';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import type { CartItem } from '@/types/cart';
 import type { Product } from '@/types/product';
+import { getVoucherRate } from '@/utils/voucher';
+
 import { cartReducer, initialCartState } from './cart-reducer';
 
 export interface CartContextValue {
@@ -34,7 +36,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // load the saved cart once, when the app starts
   useEffect(() => {
     AsyncStorage.getItem(STORAGE_KEY)
-      .then(saved => {
+      .then((saved) => {
         if (!saved) return;
         const data = JSON.parse(saved);
         dispatch({ type: 'HYDRATE', items: data.items ?? [] });
@@ -75,16 +77,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     items: state.items,
     itemCount,
     subtotal,
-    addToCart: product => dispatch({ type: 'ADD', product }),
-    increase: productId => dispatch({ type: 'INCREASE', productId }),
-    decrease: productId => dispatch({ type: 'DECREASE', productId }),
-    removeFromCart: productId => dispatch({ type: 'REMOVE', productId }),
+    addToCart: (product) => dispatch({ type: 'ADD', product }),
+    increase: (productId) => dispatch({ type: 'INCREASE', productId }),
+    decrease: (productId) => dispatch({ type: 'DECREASE', productId }),
+    removeFromCart: (productId) => dispatch({ type: 'REMOVE', productId }),
     clearCart: () => dispatch({ type: 'CLEAR' }),
     voucherCode,
     discount,
     total,
-    applyVoucher: code => {
-      if (getVoucherRate(code) === null) return false // invalid code
+    applyVoucher: (code) => {
+      if (getVoucherRate(code) === null) return false; // invalid code
       setVoucherCode(code.trim().toUpperCase());
       return true;
     },
