@@ -45,7 +45,7 @@ npx expo start
 ```
 
 ## Android APK
-Download from the [v1.0.0 release](https://github.com/Joshlanuevo/kulay-cart/releases/tag/v1.0.0).
+Download from the [v1.0.1 release](https://github.com/Joshlanuevo/kulay-cart/releases/tag/v1.0.1).
 
 ## Screenshots
 <p>
