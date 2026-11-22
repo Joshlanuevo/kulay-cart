@@ -1,4 +1,5 @@
 import { FlatList, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CartItemRow } from '@/components/cart-item-row';
 import { VoucherInput } from '@/components/voucher-input';
@@ -8,6 +9,7 @@ import { formatPeso } from '@/utils/format';
 import { getVoucherPercent } from '@/utils/voucher';
 
 export default function CartScreen() {
+  const insets = useSafeAreaInsets();
   const { items, itemCount, subtotal, discount, total, voucherCode } = useCart();
 
   if (items.length === 0) {
@@ -19,7 +21,9 @@ export default function CartScreen() {
   }
 
   return (
-    <View className="flex-1 bg-brand-light">
+    <View 
+      className="flex-1 bg-brand-light"
+    >
       <FlatList
         data={items}
         keyExtractor={(item) => item.product.id}
@@ -28,7 +32,10 @@ export default function CartScreen() {
       />
 
       {/* Summary at the bottom */}
-      <View className="gap-2 border-t border-pink-100 bg-white p-4">
+      <View 
+        className="gap-2 border-t border-pink-100 bg-white p-4"
+        style={{ paddingBottom: insets.bottom + 16 }}
+      >
         <VoucherInput />
 
         <View className="flex-row justify-between">
